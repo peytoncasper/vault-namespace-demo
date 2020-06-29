@@ -1,0 +1,4 @@
+path "database/*"
+{
+  capabilities = ["read"]
+}

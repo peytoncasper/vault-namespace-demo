@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: vault-agent-demo
+spec:
+  selector:
+    matchLabels:
+      app: vault-agent-demo
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-test: "secret/test"
+        vault.hashicorp.com/role: "app-b"
+        vault.hashicorp.com/namespace: "operations"
+      labels:
+        app: vault-agent-demo
+    spec:
+      serviceAccountName: vault-auth
+      containers:
+      - name: app
+        image: jweissig/app:0.0.1
+
